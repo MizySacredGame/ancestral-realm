@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Ancestral Realm — Mizy Sacred Fine Art</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+:root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-dark: #8B6914;
+    --gold-glow: rgba(201,168,76,0.4);
+    --deep-black: #050505;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--deep-black);
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    touch-action: none;
+    -webkit-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+#sacred-particles {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+}
+#password-screen {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--deep-black);
+    z-index: 5000;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    pointer-events: auto;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+#password-screen.unlocked {
+    opacity: 0; transform: scale(1.1);
+    pointer-events: none;
+}
+.pw-glow-ring {
+    position: absolute;
+    width: 300px; height: 300px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 50%;
+    animation: ringPulse 4s ease-in-out infinite;
+}
+.pw-glow-ring:nth-child(2) { width: 400px; height: 400px; animation-delay: 1s; }
+.pw-glow-ring:nth-child(3) { width: 500px; height: 500px; animation-delay: 2s; }
+@keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.05); opacity: 0.6; }
+}
+.pw-logo-container {
+    position: relative; z-index: 2;
+    text-align: center; margin-bottom: 30px;
+}
+.pw-logo-img {
+    width: 100px; height: auto;
+    filter: drop-shadow(0 0 30px rgba(201,168,76,0.6));
+    animation: logoBreath 3s ease-in-out infinite;
+}
+@keyframes logoBreath {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(201,168,76,0.4)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 40px rgba(201,168,76,0.8)); transform: scale(1.03); }
+}
+.pw-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem; font-weight: 700;
+    letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(201,168,76,0.5);
+    margin-top: 20px;
+}
+.pw-subtitle {
+    font-size: 0.85rem; color: var(--gold-dark);
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-top: 8px; font-style: italic;
+}
+.pw-divider {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 20px auto;
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+.pw-input-wrap {
+    position: relative; z-index: 2;
+    margin-bottom: 20px;
+}
+#pw-input {
+    background: rgba(201,168,76,0.08);
+    border: 1.5px solid var(--gold-dark);
+    color: var(--gold-light);
+    padding: 14px 24px;
+    font-size: 1.1rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 4px;
+    text-align: center;
+    width: 260px;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+}
+#pw-input::placeholder {
+    color: rgba(139,105,20,0.5);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+}
+#pw-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 25px rgba(201,168,76,0.3), inset 0 0 20px rgba(201,168,76,0.05);
+    background: rgba(201,168,76,0.12);
+}
+#pw-input.error {
+    border-color: #ff4444;
+    animation: shake 0.4s ease;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+.pw-runes {
+    display: flex; gap: 8px; justify-content: center;
+    margin-bottom: 25px; z-index: 2;
+}
+.pw-rune {
+    width: 10px; height: 10px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+.pw-rune.filled {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+#unlock-btn {
+    padding: 14px 50px;
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.85rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 15px rgba(201,168,76,0.15);
+    z-index: 2; position: relative;
+}
+#unlock-btn:hover {
+    background: var(--gold);
+    color: var(--deep-black);
+    box-shadow: 0 0 35px rgba(201,168,76,0.5);
+    transform: translateY(-2px);
+}
+#unlock-btn:active { transform: translateY(1px) scale(0.98); }
+.pw-error {
+    color: #ff6666; font-size: 0.8rem;
+    margin-top: 12px; opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 2; min-height: 20px;
+    font-style: italic;
+}
+.pw-error.show { opacity: 1; }
+.pw-contact {
+    position: absolute; bottom: 25px;
+    color: #444; font-size: 0.65rem;
+    text-align: center; line-height: 1.7;
+    z-index: 2; letter-spacing: 1px;
+}
+.pw-contact a { color: var(--gold-dark); text-decoration: none; }
+.pw-contact a:hover { color: var(--gold); }
+
+/* ENTER SCREEN */
+#enter-screen {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--deep-black);
+    z-index: 4000;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+#enter-screen.active { display: flex; }
+#enter-screen.visible { opacity: 1; }
+.enter-bg-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    animation: bgGlowPulse 6s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes bgGlowPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+.enter-logo {
+    width: 130px; height: auto;
+    filter: drop-shadow(0 0 30px rgba(201,168,76,0.5));
+    animation: enterFloat 4s ease-in-out infinite;
+    margin-bottom: 25px;
+    z-index: 2;
+}
+@keyframes enterFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+.enter-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem; font-weight: 700;
+    letter-spacing: 8px; text-transform: uppercase;
+    color: var(--gold);
+    text-shadow: 0 0 25px rgba(201,168,76,0.4);
+    z-index: 2; text-align: center;
+}
+.enter-tagline {
+    font-size: 0.9rem; color: var(--gold-dark);
+    letter-spacing: 3px; margin-top: 10px;
+    font-style: italic; z-index: 2;
+}
+.enter-ancestors {
+    margin: 30px 0; z-index: 2;
+    text-align: center;
+}
+.enter-gen {
+    margin: 6px 0; font-size: 0.75rem;
+    color: #555; letter-spacing: 2px;
+    line-height: 1.6;
+}
+.enter-gen .gen-label {
+    color: var(--gold-dark);
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+.enter-gen .gen-name {
+    color: var(--gold);
+    font-weight: 600;
+}
+.enter-quote {
+    font-style: italic; color: #444;
+    font-size: 0.8rem; letter-spacing: 1px;
+    margin: 15px 0 30px; z-index: 2;
+    text-align: center; max-width: 400px;
+    line-height: 1.8;
+}
+#enter-btn {
+    padding: 16px 55px;
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.5s ease;
+    box-shadow: 0 0 20px rgba(201,168,76,0.15);
+    z-index: 2; position: relative;
+    overflow: hidden;
+}
+#enter-btn::before {
+    content: ''; position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: var(--gold);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+#enter-btn:hover::before { left: 0; }
+#enter-btn:hover {
+    color: var(--deep-black);
+    box-shadow: 0 0 40px rgba(201,168,76,0.5);
+    transform: translateY(-3px);
+}
+
+/* HOW TO PLAY */
+#how-to-play {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(5,5,5,0.97);
+    z-index: 3500;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    pointer-events: auto;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+#how-to-play.active { display: flex; }
+#how-to-play.visible { opacity: 1; }
+.htp-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem; color: var(--gold);
+    letter-spacing: 4px; margin-bottom: 25px;
+    text-align: center;
+}
+.htp-content {
+    max-width: 420px;
+    color: #aaa; font-size: 0.85rem;
+    line-height: 2; text-align: center;
+}
+.htp-content b { color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.8rem; }
+.htp-content .icon { font-size: 1.2rem; margin-right: 6px; }
+.htp-divider {
+    width: 40px; height: 1px;
+    background: var(--gold-dark);
+    margin: 15px auto;
+}
+.got-it-btn {
+    margin-top: 30px;
+    padding: 14px 45px;
+    background: var(--gold);
+    color: var(--deep-black);
+    border: none;
+    font-size: 0.85rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+.got-it-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(201,168,76,0.5);
+}
+
+/* GAME CANVAS */
+#gameCanvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+}
+
+/* UI LAYER */
+#ui-layer {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10; pointer-events: none;
+}
+#top-bar {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 52px;
+    background: rgba(5,5,5,0.9);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    pointer-events: auto;
+    backdrop-filter: blur(12px);
+    z-index: 100;
+}
+#menu-btn {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer;
+    background: rgba(201,168,76,0.08);
+    transition: all 0.3s ease;
+    color: var(--gold);
+    pointer-events: auto;
+}
+#menu-btn:hover {
+    background: rgba(201,168,76,0.25);
+    transform: rotate(15deg) scale(1.1);
+    box-shadow: 0 0 15px rgba(201,168,76,0.3);
+}
+#top-bar .title-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem; color: var(--gold);
+    letter-spacing: 3px; text-transform: uppercase;
+    text-align: center; flex: 1;
+}
+#top-bar .logo-small {
+    height: 36px; width: auto; opacity: 0.85;
+}
+#notification-area {
+    position: absolute; top: 62px; left: 50%;
+    transform: translateX(-50%);
+    text-align: center; pointer-events: auto;
+    min-width: 280px; z-index: 110;
+}
+.notification {
+    background: rgba(5,5,5,0.95);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-light);
+    padding: 10px 18px;
+    border-radius: 8px;
+    margin: 4px 0;
+    font-size: 0.8rem;
+    opacity: 0;
+    animation: notifyIn 0.5s forwards, notifyOut 0.5s 4.5s forwards;
+    box-shadow: 0 0 20px rgba(201,168,76,0.15);
+    max-width: 90vw;
+    line-height: 1.5;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.5px;
+}
+@keyframes notifyIn {
+    from { opacity: 0; transform: translateY(-15px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes notifyOut {
+    from { opacity: 1; }
+    to { opacity: 0; transform: translateY(-10px); }
+}
+#clan-hud {
+    position: absolute; top: 62px; right: 10px;
+    pointer-events: auto; text-align: right;
+    z-index: 105;
+}
+.clan-badge {
+    background: rgba(5,5,5,0.85);
+    border-right: 2px solid var(--gold);
+    padding: 5px 12px; margin: 3px 0;
+    color: var(--gold);
+    font-size: 0.62rem;
+    border-radius: 4px 0 0 4px;
+    letter-spacing: 1.5px;
+    transform: translateX(120%);
+    animation: hudSlide 0.6s forwards;
+    backdrop-filter: blur(6px);
+    font-family: 'Cinzel', serif;
+    white-space: nowrap;
+}
+@keyframes hudSlide { to { transform: translateX(0); } }
+#dpad {
+    position: absolute; bottom: 22px; left: 18px;
+    width: 140px; height: 140px;
+    pointer-events: auto; z-index: 120;
+}
+.dpad-btn {
+    position: absolute;
+    width: 44px; height: 44px;
+    background: rgba(201,168,76,0.1);
+    border: 1.5px solid rgba(201,168,76,0.4);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--gold);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    backdrop-filter: blur(6px);
+    user-select: none;
+}
+.dpad-btn:active, .dpad-btn.pressed {
+    background: rgba(201,168,76,0.4);
+    transform: scale(0.9);
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(201,168,76,0.3);
+}
+.dpad-btn.up { top: 0; left: 48px; }
+.dpad-btn.down { bottom: 0; left: 48px; }
+.dpad-btn.left { top: 48px; left: 0; }
+.dpad-btn.right { top: 48px; right: 0; }
+#jump-btn {
+    position: absolute; bottom: 38px; right: 28px;
+    width: 75px; height: 75px;
+    pointer-events: auto; z-index: 120;
+    background: rgba(201,168,76,0.12);
+    border: 2px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--gold);
+    cursor: pointer; user-select: none;
+    transition: all 0.15s ease;
+    backdrop-filter: blur(6px);
+    font-family: 'Cinzel', serif;
+    font-weight: 700; letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(201,168,76,0.1);
+}
+#jump-btn:active, #jump-btn.pressed {
+    background: rgba(201,168,76,0.5);
+    transform: scale(0.85);
+    box-shadow: 0 0 30px rgba(201,168,76,0.4);
+    border-color: var(--gold);
+}
+#effect-status {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 115;
+    text-align: center;
+}
+.effect-badge {
+    display: inline-block;
+    padding: 8px 16px; margin: 3px;
+    border-radius: 25px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: badgePop 0.4s ease-out;
+    backdrop-filter: blur(6px);
+    font-family: 'Cinzel', serif;
+    white-space: nowrap;
+}
+.effect-badge.speed { background: rgba(180,30,30,0.9); color: #fff; border: 1px solid #ff4444; }
+.effect-badge.slow { background: rgba(30,30,120,0.9); color: #fff; border: 1px solid #4444ff; }
+.effect-badge.invisible { background: rgba(100,0,100,0.9); color: #fff; border: 1px solid #aa44aa; }
+.effect-badge.golden { background: rgba(201,168,76,0.9); color: #000; border: 1px solid var(--gold); }
+.effect-badge.shield { background: rgba(34,139,34,0.9); color: #fff; border: 1px solid #00ff88; }
+.effect-badge.vision { background: rgba(0,100,100,0.9); color: #fff; border: 1px solid #00cccc; }
+@keyframes badgePop {
+    from { transform: scale(0) rotate(-5deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+}
+#timeline-bar {
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 4px;
+    background: rgba(255,255,255,0.05);
+    z-index: 130;
+}
+#timeline-progress {
+    height: 100%; width: 0%;
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold-glow);
+    transition: width 0.5s ease;
+}
+#score-display {
+    position: absolute; top: 62px; left: 14px;
+    z-index: 105;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem; color: var(--gold-dark);
+    letter-spacing: 2px;
+}
+#score-display span { color: var(--gold); font-size: 0.9rem; }
+
+/* ANCESTOR PANEL */
+#ancestor-panel {
+    position: fixed; top: 0; left: -105%;
+    width: 100%; max-width: 500px; height: 100%;
+    background: rgba(5,5,5,0.98);
+    border-right: 2px solid var(--gold);
+    z-index: 300;
+    transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    padding: 20px;
+    pointer-events: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-dark) transparent;
+}
+#ancestor-panel.open { left: 0; }
+#ancestor-panel::-webkit-scrollbar { width: 4px; }
+#ancestor-panel::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+.panel-header {
+    text-align: center; margin-bottom: 25px;
+    position: relative; padding-bottom: 15px;
+}
+.panel-header::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 1px;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+.panel-header h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+.panel-header .panel-subtitle {
+    color: var(--gold-dark);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    margin-top: 6px;
+    font-style: italic;
+}
+.close-panel {
+    position: absolute; top: 14px; right: 14px;
+    color: var(--gold); font-size: 32px;
+    cursor: pointer; line-height: 1;
+    transition: all 0.3s ease;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+}
+.close-panel:hover {
+    background: rgba(201,168,76,0.15);
+    transform: rotate(90deg);
+}
+.gen-header {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 25px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    display: flex; align-items: center; gap: 10px;
+}
+.gen-header .gen-icon { font-size: 1.2rem; }
+.gen-header .gen-line {
+    flex: 1; height: 1px;
+    background: rgba(201,168,76,0.15);
+}
+.ancestor-card {
+    background: rgba(139,105,20,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+.ancestor-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; width: 3px; height: 100%;
+    background: var(--gold-dark);
+    transition: background 0.3s ease;
+}
+.ancestor-card:hover {
+    background: rgba(139,105,20,0.14);
+    border-color: rgba(201,168,76,0.5);
+    transform: translateX(5px);
+    box-shadow: 0 5px 25px rgba(201,168,76,0.1);
+}
+.ancestor-card:hover::before { background: var(--gold); }
+.ancestor-card.expanded {
+    background: rgba(139,105,20,0.12);
+    border-color: rgba(201,168,76,0.5);
+}
+.ancestor-card.expanded::before { background: var(--gold); }
+.ancestor-card .card-img {
+    width: 100%; height: 240px;
+    object-fit: cover; object-position: top center;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: block;
+    transition: all 0.5s ease;
+    filter: brightness(0.9) contrast(1.05);
+}
+.ancestor-card:hover .card-img {
+    filter: brightness(1) contrast(1.05);
+    transform: scale(1.02);
+}
+.ancestor-card .card-img-placeholder {
+    width: 100%; height: 240px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: rgba(201,168,76,0.05);
+    position: relative; overflow: hidden;
+}
+.ancestor-card .card-img-placeholder::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(201,168,76,0.1) 0%, transparent 60%);
+}
+.ancestor-card .card-img-placeholder .ph-icon {
+    font-size: 3rem; opacity: 0.3; margin-bottom: 10px;
+}
+.ancestor-card .card-img-placeholder .ph-text {
+    color: var(--gold-dark); font-size: 0.75rem;
+    letter-spacing: 2px; font-family: 'Cinzel', serif;
+    z-index: 1;
+}
+.ancestor-card .card-img-placeholder .ph-sub {
+    color: #444; font-size: 0.65rem;
+    margin-top: 6px; font-style: italic;
+    z-index: 1;
+}
+.ancestor-card h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    letter-spacing: 1.5px;
+    display: flex; align-items: center; gap: 8px;
+}
+.ancestor-card .years {
+    color: #777; font-size: 0.72rem;
+    font-style: italic; letter-spacing: 1px;
+}
+.ancestor-card .clan {
+    color: var(--gold-dark);
+    font-size: 0.72rem; margin-top: 5px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
+}
+.ancestor-card .title-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    color: var(--gold-light);
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    margin-top: 8px;
+    font-family: 'Cinzel', serif;
+}
+.ancestor-card .expand-hint {
+    color: var(--gold-dark);
+    font-size: 0.62rem;
+    margin-top: 10px;
+    text-align: center;
+    letter-spacing: 2px;
+    font-family: 'Cinzel', serif;
+    transition: all 0.3s ease;
+}
+.ancestor-card.expanded .expand-hint { color: var(--gold); }
+.ancestor-card .expand-hint .arrow {
+    display: inline-block;
+    transition: transform 0.4s ease;
+}
+.ancestor-card.expanded .expand-hint .arrow { transform: rotate(90deg); }
+.ancestor-card .collapsible {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ancestor-card.expanded .collapsible { max-height: 2000px; }
+.ancestor-card .praise {
+    color: #ccc;
+    font-size: 0.78rem;
+    margin-top: 12px;
+    line-height: 1.8;
+    font-style: italic;
+    border-left: 2px solid var(--gold);
+    padding-left: 14px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.1s;
+}
+.ancestor-card.expanded .praise { opacity: 1; transform: translateY(0); }
+.ancestor-card .praise b {
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    font-style: normal;
+}
+.ancestor-card .praise .praise-lang {
+    color: var(--gold-dark);
+    font-size: 0.7rem;
+    font-style: normal;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: block;
+}
+.ancestor-card .dress-code {
+    color: #aaa;
+    font-size: 0.72rem;
+    margin-top: 14px;
+    border-top: 1px dashed rgba(201,168,76,0.15);
+    padding-top: 10px;
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.2s;
+}
+.ancestor-card.expanded .dress-code { opacity: 1; transform: translateY(0); }
+.ancestor-card .dress-code b {
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+}
+.ancestor-card .history {
+    color: #999;
+    font-size: 0.75rem;
+    margin-top: 12px;
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.15s;
+}
+.ancestor-card.expanded .history { opacity: 1; transform: translateY(0); }
+.ancestor-card .history b {
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+}
+.ancestor-card .documentary-link {
+    margin-top: 14px;
+    padding: 10px 16px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    text-align: center;
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease 0.25s;
+}
+.ancestor-card.expanded .documentary-link { opacity: 1; transform: translateY(0); }
+.ancestor-card .documentary-link:hover {
+    background: rgba(201,168,76,0.2);
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(201,168,76,0.15);
+}
+.panel-footer {
+    text-align: center;
+    margin-top: 30px; padding-top: 20px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+}
+.panel-footer .footer-title {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+.panel-footer .footer-text {
+    color: #555;
+    font-size: 0.68rem;
+    line-height: 1.8;
+    font-style: italic;
+    max-width: 380px;
+    margin: 0 auto;
+}
+.panel-footer .footer-brand {
+    margin-top: 15px;
+    font-family: 'Cinzel', serif;
+    color: var(--gold-dark);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+}
+
+/* DOCUMENTARY MODAL */
+#doc-modal {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(5,5,5,0.98);
+    z-index: 400;
+    display: none; flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    overflow-y: auto;
+    padding: 20px;
+}
+#doc-modal.active { display: flex; }
+#doc-modal.visible { opacity: 1; }
+.doc-close {
+    position: absolute; top: 15px; right: 15px;
+    color: var(--gold); font-size: 28px;
+    cursor: pointer; z-index: 10;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+.doc-close:hover { background: rgba(201,168,76,0.15); transform: rotate(90deg); }
+.doc-content {
+    max-width: 600px;
+    width: 100%;
+    margin-top: 40px;
+}
+.doc-ancestor-img {
+    width: 100%; max-width: 350px;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid rgba(201,168,76,0.3);
+    margin: 0 auto 25px;
+    display: block;
+    filter: brightness(0.9) contrast(1.05);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.doc-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem; color: var(--gold);
+    text-align: center;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+.doc-subtitle {
+    text-align: center;
+    color: var(--gold-dark);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+}
+.doc-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+.doc-section:last-child { border-bottom: none; }
+.doc-section h4 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+}
+.doc-section p {
+    color: #bbb;
+    font-size: 0.85rem;
+    line-height: 1.9;
+    text-align: justify;
+}
+.doc-section .doc-quote {
+    border-left: 3px solid var(--gold);
+    padding-left: 16px;
+    margin: 15px 0;
+    color: var(--gold-light);
+    font-style: italic;
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+.doc-section .doc-praise {
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+    color: #ccc;
+    font-size: 0.82rem;
+    line-height: 1.9;
+    font-style: italic;
+}
+.doc-section .doc-praise b {
+    color: var(--gold);
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+.doc-video-placeholder {
+    width: 100%; height: 200px;
+    background: rgba(201,168,76,0.05);
+    border: 2px dashed rgba(201,168,76,0.2);
+    border-radius: 12px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    margin: 20px 0;
+    color: var(--gold-dark);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.doc-video-placeholder:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.1);
+}
+.doc-video-placeholder .play-icon {
+    font-size: 3rem; margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+/* LOADING SCREEN */
+#loading-screen {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--deep-black);
+    z-index: 6000;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 1s ease;
+}
+#loading-screen.hidden { opacity: 0; pointer-events: none; }
+.loading-logo {
+    width: 80px; height: auto;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.5));
+    animation: loadPulse 2s ease-in-out infinite;
+}
+@keyframes loadPulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+.loading-text {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+.loading-bar {
+    width: 150px; height: 2px;
+    background: rgba(201,168,76,0.1);
+    margin-top: 15px;
+    border-radius: 1px;
+    overflow: hidden;
+}
+.loading-bar-inner {
+    height: 100%; width: 0%;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold-glow);
+    animation: loadProgress 2s ease forwards;
+}
+@keyframes loadProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .pw-title { font-size: 1.1rem; letter-spacing: 3px; }
+    .enter-title { font-size: 1.1rem; letter-spacing: 3px; }
+    .enter-tagline { font-size: 0.7rem; }
+    .enter-gen { font-size: 0.6rem; }
+    .enter-quote { font-size: 0.7rem; }
+    #top-bar .title-text { font-size: 0.55rem; letter-spacing: 1px; }
+    #dpad { width: 115px; height: 115px; bottom: 15px; left: 12px; }
+    .dpad-btn { width: 36px; height: 36px; font-size: 14px; }
+    .dpad-btn.up { top: 0; left: 39px; } .dpad-btn.down { bottom: 0; left: 39px; }
+    .dpad-btn.left { top: 39px; left: 0; } .dpad-btn.right { top: 39px; right: 0; }
+    #jump-btn { width: 58px; height: 58px; bottom: 22px; right: 15px; font-size: 9px; }
+    #ancestor-panel { max-width: 100%; padding: 14px; }
+    .ancestor-card .card-img, .ancestor-card .card-img-placeholder { height: 200px; }
+    .ancestor-card h3 { font-size: 0.8rem; }
+    .clan-badge { font-size: 0.55rem; padding: 4px 8px; }
+    .doc-title { font-size: 1.1rem; }
+    .htp-title { font-size: 1rem; }
+    .htp-content { font-size: 0.75rem; }
+}
+@media (max-width: 380px) {
+    .pw-title { font-size: 0.9rem; }
+    #pw-input { width: 200px; font-size: 0.9rem; }
+    .enter-title { font-size: 0.9rem; }
+    .ancestor-card .card-img, .ancestor-card .card-img-placeholder { height: 170px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+    <img src="mizy_logo.png" class="loading-logo" alt="Mizy Sacred" onerror="this.style.display='none'">
+    <div class="loading-text">Awakening the Ancestors</div>
+    <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+</div>
+
+<!-- SACRED PARTICLE CANVAS -->
+<canvas id="sacred-particles"></canvas>
+
+<!-- PASSWORD GATE -->
+<div id="password-screen">
+    <div class="pw-glow-ring"></div>
+    <div class="pw-glow-ring"></div>
+    <div class="pw-glow-ring"></div>
+    <div class="pw-logo-container">
+        <img src="mizy_logo.png" class="pw-logo-img" alt="Mizy Sacred" onerror="this.style.display='none'">
+        <div class="pw-title">The Ancestral Realm</div>
+        <div class="pw-subtitle">Private Bloodline Access</div>
+        <div class="pw-divider"></div>
+    </div>
+    <div class="pw-input-wrap">
+        <input type="password" id="pw-input" placeholder="SACRED PASSWORD" maxlength="20" autocomplete="off">
+    </div>
+    <div class="pw-runes" id="pw-runes">
+        <div class="pw-rune"></div><div class="pw-rune"></div><div class="pw-rune"></div>
+        <div class="pw-rune"></div><div class="pw-rune"></div><div class="pw-rune"></div>
+        <div class="pw-rune"></div><div class="pw-rune"></div><div class="pw-rune"></div>
+        <div class="pw-rune"></div><div class="pw-rune"></div><div class="pw-rune"></div>
+    </div>
+    <button id="unlock-btn">UNLOCK REALM</button>
+    <div class="pw-error" id="pw-error">The ancestors reject this password. Try again.</div>
+    <div class="pw-contact">
+        Forgot your sacred key?<br>
+        Contact <a href="https://wa.me/27600000000">Mizy Sacred Fine Art</a><br>
+        This realm is protected and licensed.<br>
+        Unauthorized access is spiritually prohibited.
+    </div>
+</div>
+
+<!-- ENTER SCREEN -->
+<div id="enter-screen">
+    <div class="enter-bg-glow"></div>
+    <img src="mizy_logo.png" class="enter-logo" alt="Mizy Sacred" onerror="this.style.display='none'">
+    <div class="enter-title">The Ancestral Realm</div>
+    <div class="enter-tagline">Bringing Loved Ones Together Forever</div>
+    <div class="enter-ancestors">
+        <div class="enter-gen"><span class="gen-label">Generation I</span> &mdash; <span class="gen-name">Mollele Mahlatsi</span> &bull; <span class="gen-name">Tholoana Lydia</span></div>
+        <div class="enter-gen"><span class="gen-label">Generation II</span> &mdash; <span class="gen-name">Mamkwanazi</span> &bull; <span class="gen-name">Patriarch Ndlovu / Gumede</span></div>
+        <div class="enter-gen"><span class="gen-label">Generation III</span> &mdash; <span class="gen-name">Theodore Seneke</span> &bull; <span class="gen-name">Bessie Seneke</span></div>
+        <div class="enter-gen"><span class="gen-label">Generation IV</span> &mdash; <span class="gen-name">Sipi Thomas</span> &bull; <span class="gen-name">Ellen Seneke</span></div>
+        <div class="enter-gen"><span class="gen-label">Generation V</span> &mdash; <span class="gen-name">Ben Mahlatsi</span> &bull; <span class="gen-name">Pascalina</span></div>
+    </div>
+    <div class="enter-quote">&ldquo;A legacy that cannot be buried. A bloodline that time itself could not erase.&rdquo;</div>
+    <button id="enter-btn">Enter the Realm</button>
+</div>
+
+<!-- HOW TO PLAY -->
+<div id="how-to-play">
+    <div class="htp-title">How to Walk With Your Ancestors</div>
+    <div class="htp-content">
+        <span class="icon">🎮</span><b>MOVE</b> &mdash; Use the <b>gold D-pad</b> (bottom left) to walk across the sacred lands.<br>
+        Or keyboard: <b>Arrow Keys</b> or <b>W A S D</b>.<br>
+        <div class="htp-divider"></div>
+        <span class="icon">🦘</span><b>JUMP</b> &mdash; Tap the <b>gold circle</b> (bottom right) to leap toward the stars.<br>
+        Or press <b>Spacebar</b>.<br>
+        <div class="htp-divider"></div>
+        <span class="icon">✨</span><b>COLLECT</b> &mdash; Touch the <b>glowing sacred objects</b> scattered across the realm.<br>
+        Each triggers an <b>ancestral power</b> and unlocks deeper wisdom.<br>
+        <div class="htp-divider"></div>
+        <span class="icon">📜</span><b>ARCHIVES</b> &mdash; Tap the <b>scroll icon</b> (top left) to open the Sacred Bloodline.<br>
+        Read praises, dress codes, and clan histories.<br>
+        <div class="htp-divider"></div>
+        <span class="icon">🌟</span><b>GOAL</b> &mdash; Explore. Collect. Unlock all 5 generations.<br>
+        The ancestors are watching. The realm remembers.
+    </div>
+    <button class="got-it-btn" onclick="closeHowToPlay()">Begin the Journey</button>
+</div>
+
+<!-- GAME CANVAS -->
+<canvas id="gameCanvas"></canvas>
+
+<!-- UI LAYER -->
+<div id="ui-layer">
+    <div id="top-bar">
+        <div class="menu-btn" id="menu-btn">&#128220;</div>
+        <div class="title-text">The Ancestral Realm</div>
+        <img src="mizy_logo.png" class="logo-small" alt="Mizy" onerror="this.style.display='none'">
+    </div>
+    <div id="score-display">ANCESTRAL POWER: <span id="score-val">0</span></div>
+    <div id="notification-area"></div>
+    <div id="clan-hud">
+        <div class="clan-badge" style="animation-delay:0.1s">🐊 Mahlatsi &mdash; Koena (Crocodile)</div>
+        <div class="clan-badge" style="animation-delay:0.3s">🐘 Ndlovu &mdash; Nzou (Elephant)</div>
+        <div class="clan-badge" style="animation-delay:0.5s">🦔 Seneke &mdash; Noko (Porcupine)</div>
+        <div class="clan-badge" style="animation-delay:0.7s">⭐ Gen: <span id="gen-count">1</span> / 5</div>
+    </div>
+    <div id="dpad">
+        <div class="dpad-btn up" data-dir="up">&#9650;</div>
+        <div class="dpad-btn down" data-dir="down">&#9660;</div>
+        <div class="dpad-btn left" data-dir="left">&#9664;</div>
+        <div class="dpad-btn right" data-dir="right">&#9654;</div>
+    </div>
+    <div id="jump-btn">JUMP</div>
+    <div id="effect-status"></div>
+    <div id="timeline-bar"><div id="timeline-progress"></div></div>
+</div>
+
+<!-- ANCESTOR PANEL -->
+<div id="ancestor-panel">
+    <div class="close-panel">&times;</div>
+    <div class="panel-header">
+        <h2>&#127963; The Sacred Bloodline</h2>
+        <div class="panel-subtitle">Five Generations of Sovereign Memory</div>
+    </div>
+
+    <!-- GENERATION I -->
+    <div class="gen-header"><span class="gen-icon">&#128081;</span> Generation I <span class="gen-line"></span></div>
+
+    <div class="ancestor-card" data-gen="1" data-name="mollele">
+        <img src="mollele_mahlatsi.png" class="card-img" alt="Mollele Mahlatsi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#128081;</div>
+            <div class="ph-text">MOLLELE MAHLATSI</div>
+            <div class="ph-sub">c. 1810 &mdash; The Legend Behind the Wire</div>
+        </div>
+        <h3>&#128081; Mollele Mahlatsi</h3>
+        <div class="years">c. 1810 &mdash; &ldquo;The Legend Behind the Wire&rdquo;</div>
+        <div class="clan">Clan: Mahlatsi | Totem: Koena (Crocodile) | Sotho-Tswana</div>
+        <div class="title-tag">The Patriarch &bull; The Priest &bull; The Fighter</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Izithakazelo zakwa Mahlatsi:</b><br><br>
+                <span class="praise-lang">Sesotho / isiZulu Praises</span>
+                &ldquo;Motho wa Mammusetsi tlopo molepeledi.<br>
+                Motho wa Mahlatsi le ha o ka no ratha ka selepe ha a tswe madi o tswa mokola,<br>
+                Ke motho wa mpopo ntho e kgolo setswa batho.&rdquo;<br><br>
+                <i>&ldquo;A person of Mahlatsi &mdash; even if you strike with an axe, blood comes from the bark. A person of great substance among the people.&rdquo;</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Born in 1810, Mollele Mahlatsi stands as the foundational pillar of the paternal bloodline. He was a priest of the soil, a man who carried spiritual sovereignty long before modern borders attempted to contain it. Hidden away and buried within white-owned farms, his physical resting place was kept from his children, his grandchildren, and his wife. For generations, his bloodline was denied the right to kiss his grave &mdash; but his spirit refused to be buried. Through this visual resurrection, Mollele steps past the fences of history to reclaim his throne as the ultimate foundation of the Mahlatsi bloodline.
+            </div>
+            <div class="dress-code">
+                <b>&#128084; Dress Code:</b> Leopard-skin trim (lehlosi), sacred staff (molamu), beaded necklaces (dikgwele), mokorotlo straw hat. The leopard skin signifies priesthood and spiritual sovereignty. The mokorotlo &mdash; woven from moseha grass &mdash; represents Mount Qiloane, the mountain of Thaba Bosiu.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('mollele')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <div class="ancestor-card" data-gen="1" data-name="tholoana">
+        <img src="tholoana_mahlatsi.png" class="card-img" alt="Tholoana Lydia Mahlatsi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#10024;</div>
+            <div class="ph-text">THOLOANA LYDIA MAHLATSI</div>
+            <div class="ph-sub">c. 1840 &mdash; The Golden Matriarch</div>
+        </div>
+        <h3>&#10024; Tholoana Lydia Mahlatsi</h3>
+        <div class="years">c. 1840 &mdash; &ldquo;The Golden Matriarch&rdquo;</div>
+        <div class="clan">Clan: Mahlatsi | Totem: Koena (Crocodile) | Sotho-Tswana</div>
+        <div class="title-tag">The Womb of Blessings &bull; The Healer of Broken Wombs</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Izithakazelo &mdash; Tholoana:</b><br><br>
+                <span class="praise-lang">Sesotho Praises</span>
+                &ldquo;Tholoana &mdash; the golden mother from whom abundance flows.<br>
+                The womb of blessings, the healer of broken wombs.<br>
+                She who carries the deep well of ancestral medicine.&rdquo;<br><br>
+                <i>The name Tholoana signifies abundance &mdash; a deep well designed to feed nations. She is the counterweight to the hardships of history.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Born in 1840, Tholoana Lydia Mahlatsi is the sacred golden mother from whom the very name and gift flows. Her name signifies abundance, a deep well of ancestral medicine designed to feed nations. Draped in the pristine garments of spiritual purity, she sits as the counterweight to the hardships of history. She is the healer of the broken womb. By bringing her image back to light, the generational blockages of poverty and struggle dissolve, replaced by the original golden covenant she left behind for her descendants.
+            </div>
+            <div class="dress-code">
+                <b>&#128087; Dress Code:</b> Pure white and gold garments (dipapadi tsa kganya), golden headwrap (tuku ya kganya), beaded ornaments (maphoto). White represents spiritual purity. Gold signifies the golden covenant left for descendants.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('tholoana')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <!-- GENERATION II -->
+    <div class="gen-header"><span class="gen-icon">&#127807;</span> Generation II <span class="gen-line"></span></div>
+
+    <div class="ancestor-card" data-gen="2" data-name="mamkwanazi">
+        <img src="mamkwanazi.png" class="card-img" alt="Mamkwanazi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#127807;</div>
+            <div class="ph-text">MAMKWANAZI</div>
+            <div class="ph-sub">c. 1850s &mdash; The Shona Clan Oracle</div>
+        </div>
+        <h3>&#127807; Mamkwanazi &mdash; &ldquo;The Shona Clan Oracle&rdquo;</h3>
+        <div class="years">c. 1850s &mdash; &ldquo;The Keeper of the Zion Garments&rdquo;</div>
+        <div class="clan">Clan: Shona | Totem: Nzou (Elephant) &mdash; Ndlovu/Gumede</div>
+        <div class="title-tag">The Keeper of the Zion Garments &bull; The Seer</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Nhetembo dzemadzinza (Shona Clan Praises):</b><br><br>
+                <span class="praise-lang">Shona Praises</span>
+                &ldquo;Nzou samanyanga &mdash; Elephant, owner of huge horns.<br>
+                Ndlovu &mdash; the great beast that shakes the earth.<br>
+                Gumede &mdash; the root of royalty, the seer of wealth.<br>
+                Vakabva Guruuswa &mdash; those who came from the original land.<br>
+                Vana VaPfumojena &mdash; descendants of the wealthy one.&rdquo;<br><br>
+                <i>The elephant totem represents immense strength, memory, and ancestral wisdom. Ndlovu clans are the &ldquo;people of the elephant.&rdquo;</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Mamkwanazi represents the unyielding spiritual fortresses of the Shona Clan. Clothed in the deep green robes of the Zion faith, her closed eyes see across centuries. She is the grandmother of lines that do not bend. Alongside her husband (the Patriarch of the Ndlovu/Gumede lineage), she held the keys to supernatural sight and discernment. She stands as a fierce protector, holding her staff to strike down the generational curses that cause modern families to suffer. Her image is a shield for the entire lineage.
+            </div>
+            <div class="dress-code">
+                <b>&#129509; Dress Code:</b> Deep emerald green Zion robes (mazambia eZioni), heavy staff of spiritual authority (tsvimbo), beaded necklaces (madziro), headwrap with Zion inscriptions (tuku yaZioni). The green robes signify the Zion faith &mdash; a spiritual fortress.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('mamkwanazi')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <div class="ancestor-card" data-gen="2" data-name="ndlovu">
+        <img src="ndlovu_gumede.png" class="card-img" alt="Patriarch Ndlovu / Gumede" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#127963;</div>
+            <div class="ph-text">PATRIARCH NDLOVU / GUMEDE</div>
+            <div class="ph-sub">c. 1850s &mdash; The Prophet-King of the Shona Clan</div>
+        </div>
+        <h3>&#127963; Patriarch Ndlovu / Gumede</h3>
+        <div class="years">c. 1850s &mdash; &ldquo;The Prophet-King of the Shona Clan&rdquo;</div>
+        <div class="clan">Clan: Ndlovu-Gumede | Totem: Nzou (Elephant) | Shona</div>
+        <div class="title-tag">The Root of Royalty &bull; The Seer of Wealth &bull; The Prophet-King</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Nhetembo dzokurumbidza:</b><br><br>
+                <span class="praise-lang">Shona Praises</span>
+                &ldquo;Mhofu yomukono &mdash; The Great Eland Bull.<br>
+                Ziwewera &mdash; The one with sounding feet.<br>
+                Mutekedza &mdash; The one who carries heavy loads.<br>
+                Vakatekedzana paJanga &mdash; Those who challenged each other at Janga.<br>
+                Ziendanetyaka &mdash; One who combs wasps.&rdquo;<br><br>
+                <i>A man of double portion &mdash; recognized prophet who read the stars, and king who walked in immense earthly royalty.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Husband to Mamkwanazi and the foundational crown of the maternal line, Patriarch Ndlovu (Gumede) was a man of double portion. He was a recognized prophet who read the stars and understood the movements of the Spirit, but he was also a king who walked in immense earthly royalty. Coming from a long bloodline of sovereigns, he held the divine blueprint for both spiritual power and physical wealth. He established a legacy where spirit and structure met, passing down the DNA of the polymath, the business leader, and the absolute sovereign down through the bloodline.
+            </div>
+            <div class="dress-code">
+                <b>&#128081; Dress Code:</b> Royal leopard-skin drapes (ngubo dzemhara), heavy sacred beads (madziro akuru), carved staff of ultimate authority (tsvimbo yamambo), crown of woven grass and feathers (chiremba). The leopard skin commands greater reverence than the lion &mdash; it is the ceremonial attire of kings.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('ndlovu')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <!-- GENERATION III -->
+    <div class="gen-header"><span class="gen-icon">&#128188;</span> Generation III <span class="gen-line"></span></div>
+
+    <div class="ancestor-card" data-gen="3" data-name="theodore">
+        <div class="card-img-placeholder">
+            <div class="ph-icon">&#128188;</div>
+            <div class="ph-text">THEODORE SENEKE</div>
+            <div class="ph-sub">1908 &mdash; The Architect of Dignity</div>
+        </div>
+        <h3>&#128188; Theodore Seneke</h3>
+        <div class="years">1908 &mdash; &ldquo;The Architect of Dignity&rdquo;</div>
+        <div class="clan">Clan: Seneke (Pedi/Maroteng) | Totem: Noko (Porcupine) | Northern Sotho</div>
+        <div class="title-tag">The Pillar of the Maternal Convergence &bull; The Builder</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Izithakazelo zakwa Seneke (Pedi Line):</b><br><br>
+                <span class="praise-lang">Sepedi Praises</span>
+                &ldquo;Seneke &mdash; the builder of structures, the keeper of dignity.<br>
+                Maroteng &mdash; the people of the rain, the children of Thulare.<br>
+                Noko &mdash; the porcupine, armed with wisdom and defense.<br>
+                Sekwati &mdash; the restorer, the one who rebuilt from ashes.&rdquo;<br><br>
+                <i>The Pedi originated from the Bakgatla offshoot around 1650. Their totem Noko represents self-defense, wisdom, and thriving in harsh conditions.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Born in 1908, Theodore Seneke is one of the structured architects of the maternal line. He held the family steady through eras of intense socio-political transition, ensuring that dignity, literacy, and spiritual alignment were passed down to their daughter Ellen, and eventually to Beatrice. He represents the order, structure, and royalty required to build a lasting earthly legacy.
+            </div>
+            <div class="dress-code">
+                <b>&#127913; Dress Code:</b> Historical mid-20th century elegance &mdash; tailored three-piece suit in dark wool, pocket watch, leather oxford shoes. The formal Western attire symbolizes the bridge between traditional African dignity and modern enterprise.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('theodore')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <div class="ancestor-card" data-gen="3" data-name="bessie">
+        <div class="card-img-placeholder">
+            <div class="ph-icon">&#128082;</div>
+            <div class="ph-text">BESSIE SENEKE</div>
+            <div class="ph-sub">1919 &mdash; The Pillars of the Maternal Convergence</div>
+        </div>
+        <h3>&#128082; Bessie Seneke</h3>
+        <div class="years">1919 &mdash; &ldquo;The Pillars of the Maternal Convergence&rdquo;</div>
+        <div class="clan">Clan: Seneke (Pedi/Maroteng) | Totem: Noko (Porcupine) | Northern Sotho</div>
+        <div class="title-tag">The Quiet Strength &bull; The Foundation of Generations</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Izithakazelo &mdash; Bessie:</b><br><br>
+                <span class="praise-lang">Sepedi Praises</span>
+                &ldquo;Bessie &mdash; the quiet strength, the foundation of generations.<br>
+                Noko &mdash; the porcupine mother, gentle yet armed with protection.<br>
+                She who ensured dignity, literacy, and spiritual alignment<br>
+                flowed like water from her breast to her daughter Ellen,<br>
+                and eventually to Beatrice &mdash; the crown of her lineage.&rdquo;<br><br>
+                <i>The Pedi women's traditional dress includes the smocked shirt (gentswana/nyebelese), leather apron (kgakgo), and the distinctive tlopo hairstyle.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Born in 1919, Bessie Seneke is the structured architect of the maternal line alongside Theodore. She held the family steady through eras of intense socio-political transition, ensuring that dignity, literacy, and spiritual alignment were passed down to their daughter Ellen, and eventually to Beatrice. They represent the order, structure, and royalty required to build a lasting earthly legacy.
+            </div>
+            <div class="dress-code">
+                <b>&#128087; Dress Code:</b> Mid-20th century matriarchal elegance &mdash; structured dress with modest neckline, pearl accessories, headwrap (tuku) in muted earth tones. Red ochre and fat mixture (tshukudu) applied to the body signifies transition into womanhood.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('bessie')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <!-- GENERATION IV -->
+    <div class="gen-header"><span class="gen-icon">&#128148;</span> Generation IV <span class="gen-line"></span></div>
+
+    <div class="ancestor-card" data-gen="4" data-name="sipi">
+        <img src="sipi_thomas.png" class="card-img" alt="Sipi Thomas" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#128188;</div>
+            <div class="ph-text">SIPI THOMAS GUMEDE NDLOVU</div>
+            <div class="ph-sub">c. 1920s-1930s &mdash; The King of Broken Hearts</div>
+        </div>
+        <h3>&#128188; Sipi Thomas Gumede Ndlovu</h3>
+        <div class="years">c. 1920s-1930s &mdash; &ldquo;The King of Broken Hearts&rdquo;</div>
+        <div class="clan">Clan: Ndlovu-Gumede | Totem: Nzou (Elephant) | Shona</div>
+        <div class="title-tag">The Prophet &bull; The Merchant &bull; The Devoted Father</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Nhetembo dzemadzinza &mdash; Ndlovu/Gumede:</b><br><br>
+                <span class="praise-lang">Shona Praises</span>
+                &ldquo;Sipi Thomas &mdash; the prophet of the high courts,<br>
+                The astute businessman, the bridge between prophecy and enterprise.<br>
+                Ndlovu &mdash; the elephant who never forgets his children.<br>
+                Gumede &mdash; the root that holds the earth together.<br>
+                His tears for Beatrice became a spiritual deposit &mdash;<br>
+                A cosmic legal document that cannot be erased.&rdquo;<br><br>
+                <i>A prophet's declaration cannot die. The ancestral portrait stands as a cosmic legal document demanding the release of spiritual and financial inheritance.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Sipi Thomas was a prophet of the high courts and an astute, successful businessman. He walked with the dignity of his royal ancestors while navigating the shifting tides of the modern world. He possessed a profound, fierce love for his daughter, Beatrice Seneke. Tragically, the systems of this world and family fractures blocked Beatrice from inheriting the vast rights, wealth, and estate her father had built specifically for her. Sipi Thomas left this earth with a broken heart, crying out for his beloved daughter and the injustice done to her name. But a prophet's declaration cannot die. The tears he cried for Beatrice became a spiritual deposit. Today, through Mizy Sacred Fine Art, the ancestral portrait of Sipi Thomas stands as a cosmic legal document. By giving him his face, we restore his broken heart and legally demand the release of the spiritual and financial inheritance he locked away for his lineage.
+            </div>
+            <div class="dress-code">
+                <b>&#127913; Dress Code:</b> Tailored brown three-piece suit, leather briefcase, newspaper, felt hat. The brown suit symbolizes the earth and rootedness in ancestral soil, while the briefcase and newspaper signify astute business acumen.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('sipi')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <div class="ancestor-card" data-gen="4" data-name="ellen">
+        <img src="ellen_seneke.png" class="card-img" alt="Ellen Seneke" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#128105;</div>
+            <div class="ph-text">ELLEN SENEKE</div>
+            <div class="ph-sub">c. 1920s-1930s &mdash; The Mother of My Mother</div>
+        </div>
+        <h3>&#128105; Ellen Seneke</h3>
+        <div class="years">c. 1920s-1930s &mdash; &ldquo;The Mother of My Mother&rdquo;</div>
+        <div class="clan">Clan: Seneke (Pedi/Maroteng) | Totem: Noko (Porcupine) | Northern Sotho</div>
+        <div class="title-tag">The Purple Matriarch &bull; The Medal of Survival</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Izithakazelo &mdash; Ellen:</b><br><br>
+                <span class="praise-lang">Sepedi Praises</span>
+                &ldquo;Ellen &mdash; the mother of Beatrice, the grandmother of destiny.<br>
+                Noko &mdash; the porcupine who carries her quills with grace.<br>
+                Her purple cloak is the color of royalty and mourning &mdash;<br>
+                A woman who carried both joy and sorrow in equal measure.&rdquo;<br><br>
+                <i>The purple/violet garments signify both royal dignity and the mourning of losses endured. The medal around her neck represents honors earned through survival.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Ellen Seneke stands as the bridge between the old world and the new. As the mother of Beatrice, she carried the weight of two bloodlines &mdash; the Pedi wisdom of the Seneke clan and the resilience of the Ndlovu-Gumede legacy. Her purple cloak is not merely clothing; it is a declaration of survival, of dignity maintained through the darkest seasons of South African history. The medal she wears is not decoration &mdash; it is the badge of a woman who kept her family alive when the world tried to erase them.
+            </div>
+            <div class="dress-code">
+                <b>&#129509; Dress Code:</b> Deep purple/violet cloak with matching headwrap, medal of honor, pearl necklace. The purple color in Pedi culture represents royalty (bokgosi) and spiritual authority. The hands clasped in prayer represent the spiritual anchor of the maternal line.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('ellen')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <!-- GENERATION V -->
+    <div class="gen-header"><span class="gen-icon">&#11088;</span> Generation V <span class="gen-line"></span></div>
+
+    <div class="ancestor-card" data-gen="5" data-name="ben">
+        <img src="ben_mahlatsi.png" class="card-img" alt="Ben Mahlatsi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#128084;</div>
+            <div class="ph-text">BEN MAHLATSI</div>
+            <div class="ph-sub">c. 1920s-1930s &mdash; The Father of My Late Father</div>
+        </div>
+        <h3>&#128084; Ben Mahlatsi</h3>
+        <div class="years">c. 1920s-1930s &mdash; &ldquo;The Father of My Late Father&rdquo;</div>
+        <div class="clan">Clan: Mahlatsi | Totem: Koena (Crocodile) | Sotho-Tswana</div>
+        <div class="title-tag">The Quiet Warrior &bull; The Bridge Between Worlds</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Izithakazelo &mdash; Ben:</b><br><br>
+                <span class="praise-lang">Sesotho Praises</span>
+                &ldquo;Ben Mahlatsi &mdash; the quiet warrior, the bridge between worlds.<br>
+                Koena &mdash; the crocodile, royal totem of the Bakoena.<br>
+                He who carried the blood of Mollele into the modern era,<br>
+                Wearing the suit of the colonizer while keeping the soul of the ancestor.<br>
+                His sepia portrait is a time capsule.&rdquo;<br><br>
+                <i>The sepia tone represents the fading memory of a generation that lived through the most violent transitions of South African history.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Ben Mahlatsi represents the generation that stood at the crossroads of two worlds. He wore the suit of the modern professional while carrying the crocodile blood of Mollele Mahlatsi within him. His sepia portrait is a time capsule &mdash; a bridge between the ancient spiritual sovereignty of the Bakoena and the demands of a changing world. He is the father who passed down not just blood, but the silent strength of survival.
+            </div>
+            <div class="dress-code">
+                <b>&#128084; Dress Code:</b> Dark formal suit, white shirt, tie &mdash; the uniform of the colonial-era African professional. The suit is both armor and compromise &mdash; a necessary adaptation that never erased the crocodile blood within.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('ben')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <div class="ancestor-card" data-gen="5" data-name="pascalina">
+        <img src="pascalina.png" class="card-img" alt="Pascalina" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-img-placeholder" style="display:none;">
+            <div class="ph-icon">&#128105;</div>
+            <div class="ph-text">PASCALINA</div>
+            <div class="ph-sub">1926 &mdash; A Woman Ahead of Her Time</div>
+        </div>
+        <h3>&#128105; Pascalina</h3>
+        <div class="years">1926 &mdash; &ldquo;A Woman Ahead of Her Time&rdquo;</div>
+        <div class="clan">Clan: Mahlatsi (by marriage) | Totem: Koena (Crocodile) | Sotho-Tswana</div>
+        <div class="title-tag">The Visionary &bull; The Strategist &bull; The Inspirer</div>
+        <div class="expand-hint"><span class="arrow">&#9654;</span> TAP TO UNLOCK SACRED KNOWLEDGE</div>
+        <div class="collapsible">
+            <div class="praise">
+                <b>Izithakazelo &mdash; Pascalina:</b><br><br>
+                <span class="praise-lang">Sesotho Praises</span>
+                &ldquo;Pascalina &mdash; born 1926, a woman ahead of her time.<br>
+                She worked hard. She lived well. She inspired many.<br>
+                Her legacy lives on.<br>
+                The leopard-print headwrap &mdash; a crown of wild beauty.<br>
+                The books beneath her hands: 'A Woman Who Leads',<br>
+                'Strategy & Vision', 'Hope Is Ours'.&rdquo;<br><br>
+                <i>The books are a manifesto. The perfume bottle represents the fragrance of her memory that still lingers across generations.</i>
+            </div>
+            <div class="history">
+                <b>Historical Context:</b><br>
+                Pascalina was born in 1926 &mdash; a woman ahead of her time. She worked hard, lived well, and inspired many. Her legacy lives on through the books she held, the perfume she wore, and the leopard-print headwrap that connected her to the royal lineage of Mollele Mahlatsi. She represents the modern African woman who refused to be defined by the limitations of her era. The books beneath her hands &mdash; &ldquo;A Woman Who Leads,&rdquo; &ldquo;Strategy & Vision,&rdquo; &ldquo;Hope Is Ours&rdquo; &mdash; are not mere props. They are a manifesto. The perfume bottle represents the fragrance of her memory that still lingers across generations.
+            </div>
+            <div class="dress-code">
+                <b>&#128087; Dress Code:</b> Cream/ivory formal suit, leopard-print headwrap (tuku ya lehlosi), pearl necklace and earrings, designer handbag, perfume bottle. The cream suit represents purity of intention. The leopard print connects her to the royal lineage of Mollele Mahlatsi. The pearls symbolize wisdom earned through hardship.
+            </div>
+            <div class="documentary-link" onclick="openDocumentary('pascalina')">&#127909; Watch Documentary</div>
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <div class="footer-title">&#127775; THE FIVE FORBIDDEN REVERSAL KEYS &#127775;</div>
+        <div class="footer-text">
+            &ldquo;Through Mizy Sacred Fine Art, the ancestral portraits stand as cosmic legal documents. By giving them their faces, we restore their broken hearts and legally demand the release of the spiritual and financial inheritance locked away for the lineage.&rdquo;
+        </div>
+        <div class="footer-brand">
+            &mdash; Day 13 of the 21-Day Billionaire Manifestation Burn &mdash;<br><br>
+            <b>MIZY SACRED FINE ART</b><br>
+            Bringing Loved Ones Together Forever
+        </div>
+    </div>
+</div>
+
+<!-- DOCUMENTARY MODAL -->
+<div id="doc-modal">
+    <div class="doc-close" onclick="closeDocumentary()">&times;</div>
+    <div class="doc-content" id="doc-content"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// THE ANCESTRAL REALM — SACRED GAME ENGINE
+// Mizy Sacred Fine Art | Bringing Loved Ones Together Forever
+// ═══════════════════════════════════════════════════════════════
+
+// === PASSWORD SYSTEM ===
+const CORRECT_PASSWORD = "ANCESTOR2026";
+
+const loadingScreen = document.getElementById('loading-screen');
+const pwScreen = document.getElementById('password-screen');
+const enterScreen = document.getElementById('enter-screen');
+const pwInput = document.getElementById('pw-input');
+const unlockBtn = document.getElementById('unlock-btn');
+const pwError = document.getElementById('pw-error');
+const pwRunes = document.getElementById('pw-runes');
+
+// Loading screen
+setTimeout(() => {
+    loadingScreen.classList.add('hidden');
+    setTimeout(() => { loadingScreen.style.display = 'none'; }, 1000);
+}, 2500);
+
+// Password input with rune visualization
+pwInput.addEventListener('input', () => {
+    const val = pwInput.value;
+    const runes = pwRunes.querySelectorAll('.pw-rune');
+    runes.forEach((rune, i) => {
+        rune.classList.toggle('filled', i < val.length);
+    });
+    pwInput.classList.remove('error');
+});
+
+function checkPassword() {
+    const input = pwInput.value.trim().toUpperCase();
+    if (input === CORRECT_PASSWORD) {
+        pwScreen.classList.add('unlocked');
+        setTimeout(() => {
+            pwScreen.style.display = 'none';
+            enterScreen.classList.add('active');
+            setTimeout(() => enterScreen.classList.add('visible'), 50);
+        }, 1200);
+    } else {
+        pwError.classList.add('show');
+        pwInput.classList.add('error');
+        pwInput.value = '';
+        const runes = pwRunes.querySelectorAll('.pw-rune');
+        runes.forEach(r => r.classList.remove('filled'));
+        setTimeout(() => {
+            pwError.classList.remove('show');
+            pwInput.classList.remove('error');
+        }, 2500);
+    }
+}
+
+unlockBtn.addEventListener('click', checkPassword);
+pwInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') checkPassword();
+});
+
+// === ENTER SCREEN ===
+document.getElementById('enter-btn').addEventListener('click', () => {
+    enterScreen.style.opacity = '0';
+    setTimeout(() => {
+        enterScreen.style.display = 'none';
+        Game.started = true;
+        gameLoop();
+        setTimeout(() => {
+            document.getElementById('how-to-play').classList.add('active');
+            setTimeout(() => document.getElementById('how-to-play').classList.add('visible'), 50);
+        }, 1000);
+    }, 800);
+});
+
+function closeHowToPlay() {
+    const htp = document.getElementById('how-to-play');
+    htp.classList.remove('visible');
+    setTimeout(() => htp.classList.remove('active'), 800);
+}
+
+// === SACRED PARTICLE SYSTEM ===
+const pCanvas = document.getElementById('sacred-particles');
+const pCtx = pCanvas.getContext('2d');
+let pW, pH;
+let sacredParticles = [];
+
+function resizeParticles() {
+    pW = pCanvas.width = window.innerWidth;
+    pH = pCanvas.height = window.innerHeight;
+}
+resizeParticles();
+window.addEventListener('resize', resizeParticles);
+
+class SacredParticle {
+    constructor() {
+        this.reset();
+    }
+    reset() {
+        this.x = Math.random() * pW;
+        this.y = pH + Math.random() * 100;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.speed = Math.random() * 0.8 + 0.2;
+        this.opacity = Math.random() * 0.6 + 0.1;
+        this.wobble = Math.random() * Math.PI * 2;
+        this.wobbleSpeed = Math.random() * 0.02 + 0.005;
+        this.color = Math.random() > 0.7 ? '#C9A84C' : (Math.random() > 0.5 ? '#E8D5A3' : '#8B6914');
+    }
+    update() {
+        this.y -= this.speed;
+        this.wobble += this.wobbleSpeed;
+        this.x += Math.sin(this.wobble) * 0.5;
+        if (this.y < -10) this.reset();
+    }
+    draw(ctx) {
+        ctx.globalAlpha = this.opacity * (0.5 + 0.5 * Math.sin(Date.now() * 0.001 + this.wobble));
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+    }
+}
+
+for (let i = 0; i < 80; i++) {
+    const p = new SacredParticle();
+    p.y = Math.random() * pH;
+    sacredParticles.push(p);
+}
+
+function animateParticles() {
+    pCtx.clearRect(0, 0, pW, pH);
+    sacredParticles.forEach(p => {
+        p.update();
+        p.draw(pCtx);
+    });
+    requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// === GAME ENGINE ===
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const Game = {
+    player: {
+        x: 0, y: 0, z: 0,
+        vx: 0, vy: 0, vz: 0,
+        onGround: false,
+        speed: 3.5,
+        jumpPower: 13,
+        invisible: false,
+        invisibleTimer: 0,
+        size: 24,
+        colorHead: '#228B22',
+        colorBody: '#8B4513',
+        facing: 0
+    },
+    camera: { x: 0, y: -180, z: -350, rotX: 0.25, rotY: 0 },
+    keys: {},
+    objects: [],
+    particles: [],
+    clouds: [],
+    stars: [],
+    effects: [],
+    generation: 1,
+    score: 0,
+    time: 0,
+    sacredMode: false,
+    sacredTimer: 0,
+    started: false,
+    frameCount: 0,
+    lastTime: 0
+};
+
+function getTerrainHeight(x, z) {
+    return Math.sin(x * 0.0028) * 40 + Math.cos(z * 0.0022) * 32 + Math.sin(x * 0.001 + z * 0.0013) * 60 + Math.cos(x * 0.004 + z * 0.003) * 15;
+}
+
+const EFFECT_TYPES = [
+    { name: 'SPEED SURGE', color: '#C9A84C', type: 'speed', duration: 5000, msg: '⚡ SPEED SURGE! Golden energy flows through your veins!' },
+    { name: 'TIME WARP', color: '#4A6741', type: 'slow', duration: 4000, msg: '🐌 TIME WARP! The ancestors slow time itself...' },
+    { name: 'SPIRIT WALK', color: '#6B3FA0', type: 'invisible', duration: 6000, msg: '👻 SPIRIT WALK! You walk between worlds with the ancestors!' },
+    { name: 'GOLDEN COVENANT', color: '#FFD700', type: 'golden', duration: 8000, msg: '✨ GOLDEN COVENANT! Tholoana's blessing descends upon you!' },
+    { name: 'KOENA AWAKENS', color: '#2E8B57', type: 'speed', duration: 5000, msg: '🐊 KOENA AWAKENS! Mahlatsi crocodile strength surges!' },
+    { name: 'NZOU REMEMBERS', color: '#CD853F', type: 'golden', duration: 7000, msg: '🐘 NZOU REMEMBERS! Ndlovu elephant wisdom floods your mind!' },
+    { name: 'NOKO SHIELDS', color: '#228B22', type: 'shield', duration: 5000, msg: '🦔 NOKO SHIELDS! Seneke porcupine protection surrounds you!' },
+    { name: 'ZION VISION', color: '#008B8B', type: 'vision', duration: 5000, msg: '🌿 MAMKWANAZI SEES! Zion garments cloak your spirit!' }
+];
+
+function spawnObjects() {
+    Game.objects = [];
+    for (let i = 0; i < 60; i++) {
+        const effect = EFFECT_TYPES[Math.floor(Math.random() * EFFECT_TYPES.length)];
+        const x = (Math.random() - 0.5) * 1800;
+        const z = (Math.random() - 0.5) * 1800;
+        const y = getTerrainHeight(x, z) - 35;
+        const shape = ['cube', 'sphere', 'pyramid', 'diamond'][Math.floor(Math.random() * 4)];
+        Game.objects.push({
+            x, y, z, shape, effect,
+            size: 16 + Math.random() * 20,
+            rot: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.05,
+            bobOffset: Math.random() * Math.PI * 2,
+            collected: false,
+            pulse: 0,
+            glowPhase: Math.random() * Math.PI * 2
+        });
+    }
+}
+spawnObjects();
+
+function spawnClouds() {
+    Game.clouds = [];
+    for (let i = 0; i < 25; i++) {
+        Game.clouds.push({
+            x: (Math.random() - 0.5) * 2500,
+            y: -300 - Math.random() * 200,
+            z: (Math.random() - 0.5) * 2500,
+            size: 40 + Math.random() * 80,
+            speed: 0.1 + Math.random() * 0.3
+        });
+    }
+}
+spawnClouds();
+
+function spawnStars() {
+    Game.stars = [];
+    for (let i = 0; i < 100; i++) {
+        Game.stars.push({
+            x: (Math.random() - 0.5) * 3000,
+            y: -500 - Math.random() * 500,
+            z: (Math.random() - 0.5) * 3000,
+            size: Math.random() * 2 + 0.5,
+            twinkle: Math.random() * Math.PI * 2,
+            twinkleSpeed: Math.random() * 0.03 + 0.01
+        });
+    }
+}
+spawnStars();
+
+function project(x, y, z) {
+    const cx = Game.camera.x, cy = Game.camera.y, cz = Game.camera.z;
+    let dx = x - cx, dy = y - cy, dz = z - cz;
+    const cosY = Math.cos(Game.camera.rotY), sinY = Math.sin(Game.camera.rotY);
+    const rx = dx * cosY - dz * sinY;
+    const rz = dx * sinY + dz * cosY;
+    const cosX = Math.cos(Game.camera.rotX), sinX = Math.sin(Game.camera.rotX);
+    const ry = dy * cosX - rz * sinX;
+    const rzz = dy * sinX + rz * cosX;
+    if (rzz <= 10) return null;
+    const scale = 900 / rzz;
+    return { x: W/2 + rx * scale, y: H/2 + ry * scale, scale: scale, depth: rzz };
+}
+
+function drawSky() {
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, '#000208');
+    grad.addColorStop(0.3, '#001020');
+    grad.addColorStop(0.6, '#0a1a2e');
+    grad.addColorStop(1, '#152a3e');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+}
+
+function drawStars() {
+    Game.stars.forEach(star => {
+        star.twinkle += star.twinkleSpeed;
+        const alpha = 0.2 + 0.5 * Math.sin(star.twinkle);
+        const p = project(star.x, star.y, star.z);
+        if (!p) return;
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = '#C9A84C';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, star.size * Math.min(p.scale * 0.008, 2), 0, Math.PI * 2);
+        ctx.fill();
+        if (alpha > 0.6) {
+            ctx.strokeStyle = 'rgba(201,168,76,0.3)';
+            ctx.lineWidth = 0.5;
+            const s = star.size * 2;
+            ctx.beginPath();
+            ctx.moveTo(p.x - s, p.y); ctx.lineTo(p.x + s, p.y);
+            ctx.moveTo(p.x, p.y - s); ctx.lineTo(p.x, p.y + s);
+            ctx.stroke();
+        }
+    });
+    ctx.globalAlpha = 1;
+}
+
+function drawClouds() {
+    Game.clouds.forEach(cloud => {
+        const p = project(cloud.x, cloud.y, cloud.z);
+        if (!p || p.depth > 2500) return;
+        const alpha = Math.max(0.05, 0.3 - p.depth / 3000);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = '#C9A84C';
+        const s = cloud.size * p.scale * 0.008;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, s, 0, Math.PI * 2);
+        ctx.arc(p.x - s * 0.4, p.y + s * 0.15, s * 0.6, 0, Math.PI * 2);
+        ctx.arc(p.x + s * 0.4, p.y + s * 0.1, s * 0.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        cloud.x += cloud.speed;
+        if (cloud.x > 1500) cloud.x = -1500;
+    });
+}
+
+function drawTerrain() {
+    const step = 80, range = 1400;
+    ctx.strokeStyle = 'rgba(139, 105, 20, 0.12)';
+    ctx.lineWidth = 0.8;
+    for (let x = -range; x <= range; x += step) {
+        ctx.beginPath();
+        let first = true;
+        for (let z = -range; z <= range; z += step) {
+            const y = getTerrainHeight(x + Game.camera.x, z + Game.camera.z);
+            const p = project(x + Game.camera.x, y, z + Game.camera.z);
+            if (p) {
+                if (first) { ctx.moveTo(p.x, p.y); first = false; }
+                else ctx.lineTo(p.x, p.y);
+            }
+        }
+        ctx.stroke();
+    }
+    for (let z = -range; z <= range; z += step) {
+        ctx.beginPath();
+        let first = true;
+        for (let x = -range; x <= range; x += step) {
+            const y = getTerrainHeight(x + Game.camera.x, z + Game.camera.z);
+            const p = project(x + Game.camera.x, y, z + Game.camera.z);
+            if (p) {
+                if (first) { ctx.moveTo(p.x, p.y); first = false; }
+                else ctx.lineTo(p.x, p.y);
+            }
+        }
+        ctx.stroke();
+    }
+    for (let x = -range; x <= range; x += step * 2) {
+        for (let z = -range; z <= range; z += step * 2) {
+            const y = getTerrainHeight(x + Game.camera.x, z + Game.camera.z);
+            const p = project(x + Game.camera.x, y, z + Game.camera.z);
+            if (!p || p.depth > 2000) continue;
+            const b = Math.max(0.04, 1 - p.depth / 2000);
+            const greenIntensity = Math.floor(30 * b);
+            ctx.fillStyle = `rgba(${Math.floor(15*b)}, ${greenIntensity + 20}, ${Math.floor(25*b)}, ${b*0.4})`;
+            ctx.fillRect(p.x - 1.5, p.y - 1.5, 3, 3);
+        }
+    }
+}
+
+function drawCharacter() {
+    const player = Game.player;
+    const groundY = getTerrainHeight(player.x, player.z);
+    player.vy += 0.55;
+    player.y += player.vy;
+    if (player.y >= groundY) {
+        player.y = groundY;
+        player.vy = 0;
+        player.onGround = true;
+    } else {
+        player.onGround = false;
+    }
+
+    let moveSpeed = player.speed;
+    if (player.invisible) moveSpeed *= 1.6;
+
+    let moving = false;
+    if (Game.keys['up'] || Game.keys['w']) {
+        player.vx += Math.sin(Game.camera.rotY) * 0.6;
+        player.vz += Math.cos(Game.camera.rotY) * 0.6;
+        moving = true;
+    }
+    if (Game.keys['down'] || Game.keys['s']) {
+        player.vx -= Math.sin(Game.camera.rotY) * 0.6;
+        player.vz -= Math.cos(Game.camera.rotY) * 0.6;
+        moving = true;
+    }
+    if (Game.keys['left'] || Game.keys['a']) {
+        player.vx += Math.cos(Game.camera.rotY) * 0.6;
+        player.vz -= Math.sin(Game.camera.rotY) * 0.6;
+        moving = true;
+    }
+    if (Game.keys['right'] || Game.keys['d']) {
+        player.vx -= Math.cos(Game.camera.rotY) * 0.6;
+        player.vz += Math.sin(Game.camera.rotY) * 0.6;
+        moving = true;
+    }
+
+    player.vx *= 0.88;
+    player.vz *= 0.88;
+    player.x += player.vx * moveSpeed;
+    player.z += player.vz * moveSpeed;
+
+    if (Math.abs(player.vx) > 0.1 || Math.abs(player.vz) > 0.1) {
+        player.facing = Math.atan2(player.vx, player.vz);
+    }
+
+    Game.camera.x = player.x;
+    Game.camera.z = player.z - 320;
+    Game.camera.y = player.y - 140;
+
+    if (player.invisible) {
+        player.invisibleTimer -= 16;
+        if (player.invisibleTimer <= 0) {
+            player.invisible = false;
+            notify('👁️ You return to the physical realm');
+        }
+    }
+
+    const p = project(player.x, player.y - 45, player.z);
+    if (!p) return;
+
+    const alpha = player.invisible ? 0.3 : 1;
+    const s = player.size * p.scale * 0.01;
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y + s * 1.6, s * 0.9, s * 0.3, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = player.colorBody;
+    ctx.fillRect(p.x - s * 0.55, p.y - s * 0.6, s * 1.1, s * 1.3);
+
+    ctx.fillStyle = player.colorHead;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y - s * 1.0, s * 0.45, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (Game.sacredMode) {
+        ctx.strokeStyle = 'rgba(201,168,76,0.6)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y - s * 1.0, s * 0.6, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(201,168,76,0.15)';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y - s * 1.0, s * 0.6, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(p.x - s * 0.18, p.y - s * 1.05, s * 0.12, 0, Math.PI * 2);
+    ctx.arc(p.x + s * 0.18, p.y - s * 1.05, s * 0.12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(p.x - s * 0.18, p.y - s * 1.05, s * 0.06, 0, Math.PI * 2);
+    ctx.arc(p.x + s * 0.18, p.y - s * 1.05, s * 0.06, 0, Math.PI * 2);
+    ctx.fill();
+
+    const walkPhase = moving ? Game.time * 0.012 : 0;
+    const legSwing = moving ? Math.sin(walkPhase) * s * 0.25 : 0;
+    const armSwing = moving ? Math.sin(walkPhase + Math.PI) * s * 0.2 : 0;
+
+    ctx.fillStyle = player.colorBody;
+    ctx.fillRect(p.x - s * 0.45, p.y + s * 0.55, s * 0.32, s * 0.6 + legSwing);
+    ctx.fillRect(p.x + s * 0.13, p.y + s * 0.55, s * 0.32, s * 0.6 - legSwing);
+    ctx.fillRect(p.x - s * 0.75, p.y - s * 0.35, s * 0.22, s * 0.65 + armSwing);
+    ctx.fillRect(p.x + s * 0.53, p.y - s * 0.35, s * 0.22, s * 0.65 - armSwing);
+
+    ctx.restore();
+}
+
+function drawObjects() {
+    Game.objects.forEach(obj => {
+        if (obj.collected) return;
+        obj.rot += obj.rotSpeed;
+        obj.pulse += 0.04;
+        obj.glowPhase += 0.03;
+        const bobY = Math.sin(obj.pulse + obj.bobOffset) * 15;
+        const p = project(obj.x, obj.y + bobY, obj.z);
+        if (!p) return;
+        const s = obj.size * p.scale * 0.01;
+        if (s < 2) return;
+
+        ctx.save();
+        const glowIntensity = 0.4 + 0.3 * Math.sin(obj.glowPhase);
+        ctx.shadowColor = obj.effect.color;
+        ctx.shadowBlur = 15 + glowIntensity * 15;
+        ctx.fillStyle = obj.effect.color;
+        ctx.strokeStyle = '#C9A84C';
+        ctx.lineWidth = 1.5;
+
+        if (obj.shape === 'cube') {
+            ctx.fillRect(p.x - s/2, p.y - s/2, s, s);
+            ctx.strokeRect(p.x - s/2, p.y - s/2, s, s);
+        } else if (obj.shape === 'sphere') {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, s/2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath();
+            ctx.arc(p.x - s*0.15, p.y - s*0.15, s*0.2, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (obj.shape === 'pyramid') {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y - s/2);
+            ctx.lineTo(p.x - s/2, p.y + s/2);
+            ctx.lineTo(p.x + s/2, p.y + s/2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        } else {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y - s/2);
+            ctx.lineTo(p.x + s/3, p.y);
+            ctx.lineTo(p.x, p.y + s/2);
+            ctx.lineTo(p.x - s/3, p.y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+        ctx.restore();
+
+        ctx.fillStyle = '#C9A84C';
+        ctx.font = `bold ${Math.max(8, s * 0.25)}px 'Cinzel', Georgia, serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(obj.effect.name, p.x, p.y - s/2 - 8);
+
+        const dx = Game.player.x - obj.x;
+        const dz = Game.player.z - obj.z;
+        const dist = Math.sqrt(dx*dx + dz*dz);
+        if (dist < 45 && !obj.collected) {
+            obj.collected = true;
+            applyEffect(obj.effect);
+            spawnParticles(obj.x, obj.y + bobY, obj.z, obj.effect.color);
+            Game.score += 100;
+            document.getElementById('score-val').textContent = Game.score;
+
+            if (Game.score % 500 === 0 && Game.generation < 5) {
+                Game.generation++;
+                document.getElementById('gen-count').textContent = Game.generation;
+                notify(`🌟 GENERATION ${Game.generation} UNLOCKED! The ancestors draw nearer...`);
+                spawnObjects();
+            }
+        }
+    });
+}
+
+function applyEffect(effect) {
+    notify(effect.msg);
+    const player = Game.player;
+    switch(effect.type) {
+        case 'speed':
+            player.speed = 9;
+            setTimeout(() => { player.speed = 3.5; notify('⚡ Speed normalizes...'); }, effect.duration);
+            addBadge('speed', effect.duration);
+            break;
+        case 'slow':
+            player.speed = 1.2;
+            setTimeout(() => { player.speed = 3.5; notify('🐌 Time restores...'); }, effect.duration);
+            addBadge('slow', effect.duration);
+            break;
+        case 'invisible':
+            player.invisible = true;
+            player.invisibleTimer = effect.duration;
+            addBadge('invisible', effect.duration);
+            break;
+        case 'golden':
+            Game.sacredMode = true;
+            Game.sacredTimer = effect.duration;
+            addBadge('golden', effect.duration);
+            setTimeout(() => { Game.sacredMode = false; notify('✨ The golden light fades...'); }, effect.duration);
+            break;
+        case 'shield':
+            addBadge('shield', effect.duration);
+            break;
+        case 'vision':
+            addBadge('vision', effect.duration);
+            break;
+    }
+    document.getElementById('timeline-progress').style.width = Math.min(100, (Game.score/2500)*100) + '%';
+}
+
+function spawnParticles(x, y, z, color) {
+    for (let i = 0; i < 30; i++) {
+        Game.particles.push({
+            x, y, z,
+            vx: (Math.random()-0.5)*12,
+            vy: -Math.random()*16 - 5,
+            vz: (Math.random()-0.5)*12,
+            life: 1,
+            color,
+            size: 3 + Math.random() * 6,
+            rotation: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.2
+        });
+    }
+}
+
+function drawParticles() {
+    Game.particles = Game.particles.filter(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.z += p.vz;
+        p.vy += 0.25;
+        p.vx *= 0.98;
+        p.vz *= 0.98;
+        p.life -= 0.02;
+        p.rotation += p.rotSpeed;
+        if (p.life <= 0) return false;
+
+        const proj = project(p.x, p.y, p.z);
+        if (!proj) return true;
+
+        ctx.save();
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 12;
+        ctx.translate(proj.x, proj.y);
+        ctx.rotate(p.rotation);
+        ctx.fillRect(-p.size * proj.scale * 0.005, -p.size * proj.scale * 0.005,
+                     p.size * proj.scale * 0.01, p.size * proj.scale * 0.01);
+        ctx.restore();
+        return true;
+    });
+}
+
+function drawSacredOverlay() {
+    if (!Game.sacredMode) return;
+    ctx.save();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = '#C9A84C';
+    for (let i = 0; i < 50; i++) {
+        const sx = Math.random() * W;
+        const sy = Math.random() * H;
+        ctx.beginPath();
+        ctx.arc(sx, sy, Math.random() * 2, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    const grad = ctx.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*0.8);
+    grad.addColorStop(0, 'transparent');
+    grad.addColorStop(1, 'rgba(201,168,76,0.08)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+}
+
+function notify(text) {
+    const area = document.getElementById('notification-area');
+    const n = document.createElement('div');
+    n.className = 'notification';
+    n.textContent = text;
+    area.appendChild(n);
+    setTimeout(() => n.remove(), 4500);
+}
+
+function addBadge(type, duration) {
+    const status = document.getElementById('effect-status');
+    const badge = document.createElement('div');
+    badge.className = `effect-badge ${type}`;
+    const labels = {
+        speed: '⚡ SPEED',
+        slow: '🐌 SLOW',
+        invisible: '👻 SPIRIT',
+        golden: '✨ GOLDEN',
+        shield: '🛡️ SHIELD',
+        vision: '👁️ VISION'
+    };
+    badge.textContent = labels[type] || type.toUpperCase();
+    status.appendChild(badge);
+    setTimeout(() => {
+        badge.style.animation = 'notifyOut 0.5s forwards';
+        setTimeout(() => badge.remove(), 500);
+    }, duration);
+}
+
+const WHISPERS = [
+    '🌩️ ANCESTOR WHISPER: "The crocodile never sleeps..."',
+    '🌩️ ANCESTOR WHISPER: "Nzou remembers all..."',
+    '🌩️ ANCESTOR WHISPER: "Tholoana watches from the golden realm..."',
+    '🌩️ ANCESTOR WHISPER: "Mamkwanazi sees your path..."',
+    '🌩️ ANCESTOR WHISPER: "Sipi Thomas cries for justice..."',
+    '🌩️ ANCESTOR WHISPER: "The bloodline cannot be buried..."',
+    '🌩️ ANCESTOR WHISPER: "Pascalina's vision still guides..."',
+    '🌩️ ANCESTOR WHISPER: "Ben carries the crocodile within..."',
+    '🌩️ ANCESTOR WHISPER: "Ellen's purple cloak shields you..."',
+    '🌩️ ANCESTOR WHISPER: "The five keys are turning..."'
+];
+
+function triggerChaos() {
+    const rand = Math.random();
+    if (rand < 0.4) {
+        notify(WHISPERS[Math.floor(Math.random() * WHISPERS.length)]);
+    } else if (rand < 0.7) {
+        spawnObjects();
+        notify('🌀 CHAOS WAVE! Sacred objects have scattered anew!');
+    } else {
+        Game.camera.rotX += (Math.random()-0.5) * 0.06;
+        notify('⚡ SPIRIT TREMOR! The ancestors stir the earth!');
+    }
+}
+setInterval(triggerChaos, 15000);
+
+function gameLoop() {
+    if (!Game.started) return;
+    Game.time += 16;
+    Game.frameCount++;
+    ctx.clearRect(0, 0, W, H);
+    drawSky();
+    drawStars();
+    drawClouds();
+    drawTerrain();
+    drawObjects();
+    drawCharacter();
+    drawParticles();
+    drawSacredOverlay();
+    requestAnimationFrame(gameLoop);
+}
+
+window.addEventListener('keydown', e => {
+    Game.keys[e.key.toLowerCase()] = true;
+    if (e.key === ' ' || e.key === 'ArrowUp') {
+        if (Game.player.onGround) {
+            Game.player.vy = -Game.player.jumpPower;
+            notify('🦘 JUMP! The ancestors lift you toward the stars!');
+        }
+    }
+});
+
+window.addEventListener('keyup', e => {
+    Game.keys[e.key.toLowerCase()] = false;
+});
+
+document.querySelectorAll('.dpad-btn').forEach(btn => {
+    const dir = btn.dataset.dir;
+    const start = () => { Game.keys[dir] = true; btn.classList.add('pressed'); };
+    const end = () => { Game.keys[dir] = false; btn.classList.remove('pressed'); };
+
+    btn.addEventListener('touchstart', e => { e.preventDefault(); start(); });
+    btn.addEventListener('touchend', e => { e.preventDefault(); end(); });
+    btn.addEventListener('touchcancel', e => { e.preventDefault(); end(); });
+    btn.addEventListener('mousedown', start);
+    btn.addEventListener('mouseup', end);
+    btn.addEventListener('mouseleave', end);
+});
+
+const doJump = () => {
+    if (Game.player.onGround) {
+        Game.player.vy = -Game.player.jumpPower;
+        notify('🦘 JUMP! The ancestors lift you toward the stars!');
+    }
+};
+const jumpBtn = document.getElementById('jump-btn');
+jumpBtn.addEventListener('touchstart', e => { e.preventDefault(); doJump(); jumpBtn.classList.add('pressed'); });
+jumpBtn.addEventListener('touchend', e => { e.preventDefault(); jumpBtn.classList.remove('pressed'); });
+jumpBtn.addEventListener('mousedown', () => { doJump(); jumpBtn.classList.add('pressed'); });
+jumpBtn.addEventListener('mouseup', () => { jumpBtn.classList.remove('pressed'); });
+
+const menuBtn = document.getElementById('menu-btn');
+const panel = document.getElementById('ancestor-panel');
+const closeBtn = document.querySelector('.close-panel');
+
+menuBtn.addEventListener('click', () => panel.classList.toggle('open'));
+closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+panel.querySelectorAll('.ancestor-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        if (e.target.classList.contains('documentary-link')) return;
+        card.classList.toggle('expanded');
+    });
+});
+
+// === DOCUMENTARY SYSTEM ===
+const DOCUMENTARIES = {
+    mollele: {
+        title: '👑 Mollele Mahlatsi',
+        subtitle: 'The Legend Behind the Wire | c. 1810',
+        img: 'mollele_mahlatsi.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Mollele Mahlatsi.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Born in 1810, Mollele Mahlatsi stands as the foundational pillar of the paternal bloodline. He was a priest of the soil, a man who carried spiritual sovereignty long before modern borders attempted to contain it.</p>
+                <div class="doc-quote">"He was buried in the white farms by white people. His family never had the opportunity to bury him. His grandchildren never had the opportunity to kiss his grave."</div>
+                <p>Hidden away and buried within white-owned farms, his physical resting place was kept from his children, his grandchildren, and his wife. For generations, his bloodline was denied the right to kiss his grave — but his spirit refused to be buried.</p>
+                <div class="doc-quote">"But his legacy lives on. He was more than a man. He was our foundation, our story, our bloodline."</div>
+                <p>Through this visual resurrection, Mollele steps past the fences of history to reclaim his throne as the ultimate foundation of the Mahlatsi bloodline.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises (Izithakazelo)</h4>
+                <div class="doc-praise">
+                    <b>Sesotho / isiZulu:</b><br><br>
+                    "Motho wa Mammusetsi tlopo molepeledi.<br>
+                    Motho wa Mahlatsi le ha o ka no ratha ka selepe ha a tswe madi o tswa mokola,<br>
+                    Ke motho wa mpopo ntho e kgolo setswa batho."<br><br>
+                    <i>"A person of Mahlatsi — even if you strike with an axe, blood comes from the bark. A person of great substance among the people."</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>👔 Dress Code & Symbolism</h4>
+                <p>Leopard-skin trim (lehlosi), sacred staff (molamu), beaded necklaces (dikgwele), mokorotlo straw hat. The leopard skin signifies priesthood and spiritual sovereignty. The mokorotlo — woven from moseha grass — represents Mount Qiloane, the mountain of Thaba Bosiu.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🐊 Clan Totem: Koena (Crocodile)</h4>
+                <p>The Bakoena people trace their lineage to the crocodile totem. In Sotho tradition, the crocodile represents:</p>
+                <div class="doc-quote">• Royal sovereignty and divine right to rule<br>• Adaptability — thriving in both water and land<br>• Ancient wisdom — the crocodile has watched since before human memory<br>• Protection — the crocodile guards its young with ferocity</div>
+            </div>
+        `
+    },
+    tholoana: {
+        title: '✨ Tholoana Lydia Mahlatsi',
+        subtitle: 'The Golden Matriarch | c. 1840',
+        img: 'tholoana_mahlatsi.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Tholoana Lydia Mahlatsi.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Born in 1840, Tholoana Lydia Mahlatsi is the sacred golden mother from whom the very name and gift flows. Her name signifies abundance — a deep well of ancestral medicine designed to feed nations.</p>
+                <div class="doc-quote">"Tholoana — the golden mother from whom abundance flows. The womb of blessings, the healer of broken wombs."</div>
+                <p>Draped in the pristine garments of spiritual purity, she sits as the counterweight to the hardships of history. She is the healer of the broken womb.</p>
+                <div class="doc-quote">"By bringing her image back to light, the generational blockages of poverty and struggle dissolve, replaced by the original golden covenant she left behind for her descendants."</div>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Sesotho:</b><br><br>
+                    "Tholoana — the golden mother from whom abundance flows.<br>
+                    The womb of blessings, the healer of broken wombs.<br>
+                    She who carries the deep well of ancestral medicine."<br><br>
+                    <i>The name Tholoana signifies abundance — a deep well designed to feed nations. She is the counterweight to the hardships of history.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>👗 Dress Code & Symbolism</h4>
+                <p>Pure white and gold garments (dipapadi tsa kganya), golden headwrap (tuku ya kganya), beaded ornaments (maphoto). White represents spiritual purity. Gold signifies the golden covenant left for descendants.</p>
+            </div>
+        `
+    },
+    mamkwanazi: {
+        title: '🌿 Mamkwanazi',
+        subtitle: 'The Shona Clan Oracle | c. 1850s',
+        img: 'mamkwanazi.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Mamkwanazi.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Mamkwanazi represents the unyielding spiritual fortresses of the Shona Clan. Clothed in the deep green robes of the Zion faith, her closed eyes see across centuries.</p>
+                <div class="doc-quote">"She is the grandmother of lines that do not bend."</div>
+                <p>Alongside her husband (the Patriarch of the Ndlovu/Gumede lineage), she held the keys to supernatural sight and discernment. She stands as a fierce protector, holding her staff to strike down the generational curses that cause modern families to suffer.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises (Nhetembo)</h4>
+                <div class="doc-praise">
+                    <b>Shona:</b><br><br>
+                    "Nzou samanyanga — Elephant, owner of huge horns.<br>
+                    Ndlovu — the great beast that shakes the earth.<br>
+                    Gumede — the root of royalty, the seer of wealth.<br>
+                    Vakabva Guruuswa — those who came from the original land.<br>
+                    Vana VaPfumojena — descendants of the wealthy one."<br><br>
+                    <i>The elephant totem represents immense strength, memory, and ancestral wisdom. Ndlovu clans are the "people of the elephant."</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>🥻 Dress Code & Symbolism</h4>
+                <p>Deep emerald green Zion robes (mazambia eZioni), heavy staff of spiritual authority (tsvimbo), beaded necklaces (madziro), headwrap with Zion inscriptions (tuku yaZioni). The green robes signify the Zion faith — a spiritual fortress.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🐘 Clan Totem: Nzou (Elephant)</h4>
+                <p>The Ndlovu people trace their lineage to the elephant totem. In Shona tradition, the elephant represents:</p>
+                <div class="doc-quote">• Immense strength that cannot be moved by force<br>• Memory — the elephant never forgets its lineage<br>• Royal wisdom passed down through generations<br>• The earth-shaker — one whose presence changes the landscape</div>
+            </div>
+        `
+    },
+    ndlovu: {
+        title: '🏛️ Patriarch Ndlovu / Gumede',
+        subtitle: 'The Prophet-King of the Shona Clan | c. 1850s',
+        img: 'ndlovu_gumede.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Patriarch Ndlovu / Gumede.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Husband to Mamkwanazi and the foundational crown of the maternal line, Patriarch Ndlovu (Gumede) was a man of double portion.</p>
+                <div class="doc-quote">"He was a recognized prophet who read the stars and understood the movements of the Spirit, but he was also a king who walked in immense earthly royalty."</div>
+                <p>Coming from a long bloodline of sovereigns, he held the divine blueprint for both spiritual power and physical wealth. He established a legacy where spirit and structure met, passing down the DNA of the polymath, the business leader, and the absolute sovereign down through the bloodline.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Shona:</b><br><br>
+                    "Mhofu yomukono — The Great Eland Bull.<br>
+                    Ziwewera — The one with sounding feet.<br>
+                    Mutekedza — The one who carries heavy loads.<br>
+                    Vakatekedzana paJanga — Those who challenged each other at Janga.<br>
+                    Ziendanetyaka — One who combs wasps."<br><br>
+                    <i>A man of double portion — recognized prophet who read the stars, and king who walked in immense earthly royalty.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>👑 Dress Code & Symbolism</h4>
+                <p>Royal leopard-skin drapes (ngubo dzemhara), heavy sacred beads (madziro akuru), carved staff of ultimate authority (tsvimbo yamambo), crown of woven grass and feathers (chiremba). The leopard skin commands greater reverence than the lion — it is the ceremonial attire of kings.</p>
+            </div>
+        `
+    },
+    theodore: {
+        title: '💼 Theodore Seneke',
+        subtitle: 'The Architect of Dignity | 1908',
+        img: '',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Theodore Seneke.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Born in 1908, Theodore Seneke is one of the structured architects of the maternal line. He held the family steady through eras of intense socio-political transition.</p>
+                <div class="doc-quote">"He ensured that dignity, literacy, and spiritual alignment were passed down to their daughter Ellen, and eventually to Beatrice."</div>
+                <p>He represents the order, structure, and royalty required to build a lasting earthly legacy.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Sepedi:</b><br><br>
+                    "Seneke — the builder of structures, the keeper of dignity.<br>
+                    Maroteng — the people of the rain, the children of Thulare.<br>
+                    Noko — the porcupine, armed with wisdom and defense.<br>
+                    Sekwati — the restorer, the one who rebuilt from ashes."<br><br>
+                    <i>The Pedi originated from the Bakgatla offshoot around 1650. Their totem Noko represents self-defense, wisdom, and thriving in harsh conditions.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>🎩 Dress Code & Symbolism</h4>
+                <p>Historical mid-20th century elegance — tailored three-piece suit in dark wool, pocket watch, leather oxford shoes. The formal Western attire symbolizes the bridge between traditional African dignity and modern enterprise.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🦔 Clan Totem: Noko (Porcupine)</h4>
+                <p>The Bapedi people trace their lineage to the porcupine totem. In Pedi tradition, the porcupine represents:</p>
+                <div class="doc-quote">• Self-defense — armed with wisdom, not aggression<br>• Thriving in harsh conditions where others perish<br>• Gentle nature protected by sharp quills of discernment<br>• The quiet survivor who outlasts every storm</div>
+            </div>
+        `
+    },
+    bessie: {
+        title: '👒 Bessie Seneke',
+        subtitle: 'The Pillars of the Maternal Convergence | 1919',
+        img: '',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Bessie Seneke.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Born in 1919, Bessie Seneke is the structured architect of the maternal line alongside Theodore. She held the family steady through eras of intense socio-political transition.</p>
+                <div class="doc-quote">"She ensured that dignity, literacy, and spiritual alignment flowed like water from her breast to her daughter Ellen, and eventually to Beatrice — the crown of her lineage."</div>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Sepedi:</b><br><br>
+                    "Bessie — the quiet strength, the foundation of generations.<br>
+                    Noko — the porcupine mother, gentle yet armed with protection.<br>
+                    She who ensured dignity, literacy, and spiritual alignment<br>
+                    flowed like water from her breast to her daughter Ellen,<br>
+                    and eventually to Beatrice — the crown of her lineage."<br><br>
+                    <i>The Pedi women's traditional dress includes the smocked shirt (gentswana/nyebelese), leather apron (kgakgo), and the distinctive tlopo hairstyle.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>👗 Dress Code & Symbolism</h4>
+                <p>Mid-20th century matriarchal elegance — structured dress with modest neckline, pearl accessories, headwrap (tuku) in muted earth tones. Red ochre and fat mixture (tshukudu) applied to the body signifies transition into womanhood.</p>
+            </div>
+        `
+    },
+    sipi: {
+        title: '💼 Sipi Thomas Gumede Ndlovu',
+        subtitle: 'The King of Broken Hearts | c. 1920s-1930s',
+        img: 'sipi_thomas.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Sipi Thomas.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Sipi Thomas was a prophet of the high courts and an astute, successful businessman. He walked with the dignity of his royal ancestors while navigating the shifting tides of the modern world.</p>
+                <div class="doc-quote">"He possessed a profound, fierce love for his daughter, Beatrice Seneke."</div>
+                <p>Tragically, the systems of this world and family fractures blocked Beatrice from inheriting the vast rights, wealth, and estate her father had built specifically for her. Sipi Thomas left this earth with a broken heart, crying out for his beloved daughter and the injustice done to her name.</p>
+                <div class="doc-quote">"But a prophet's declaration cannot die. The tears he cried for Beatrice became a spiritual deposit."</div>
+                <p>Today, through Mizy Sacred Fine Art, the ancestral portrait of Sipi Thomas stands as a cosmic legal document. By giving him his face, we restore his broken heart and legally demand the release of the spiritual and financial inheritance he locked away for his lineage.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Shona:</b><br><br>
+                    "Sipi Thomas — the prophet of the high courts,<br>
+                    The astute businessman, the bridge between prophecy and enterprise.<br>
+                    Ndlovu — the elephant who never forgets his children.<br>
+                    Gumede — the root that holds the earth together.<br>
+                    His tears for Beatrice became a spiritual deposit —<br>
+                    A cosmic legal document that cannot be erased."<br><br>
+                    <i>A prophet's declaration cannot die. The ancestral portrait stands as a cosmic legal document demanding the release of spiritual and financial inheritance.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>🎩 Dress Code & Symbolism</h4>
+                <p>Tailored brown three-piece suit, leather briefcase, newspaper, felt hat. The brown suit symbolizes the earth and rootedness in ancestral soil, while the briefcase and newspaper signify astute business acumen.</p>
+            </div>
+        `
+    },
+    ellen: {
+        title: '👩 Ellen Seneke',
+        subtitle: 'The Mother of My Mother | c. 1920s-1930s',
+        img: 'ellen_seneke.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Ellen Seneke.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Ellen Seneke stands as the bridge between the old world and the new. As the mother of Beatrice, she carried the weight of two bloodlines — the Pedi wisdom of the Seneke clan and the resilience of the Ndlovu-Gumede legacy.</p>
+                <div class="doc-quote">"Her purple cloak is not merely clothing; it is a declaration of survival, of dignity maintained through the darkest seasons of South African history."</div>
+                <p>The medal she wears is not decoration — it is the badge of a woman who kept her family alive when the world tried to erase them.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Sepedi:</b><br><br>
+                    "Ellen — the mother of Beatrice, the grandmother of destiny.<br>
+                    Noko — the porcupine who carries her quills with grace.<br>
+                    Her purple cloak is the color of royalty and mourning —<br>
+                    A woman who carried both joy and sorrow in equal measure."<br><br>
+                    <i>The purple/violet garments signify both royal dignity and the mourning of losses endured. The medal around her neck represents honors earned through survival.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>🥻 Dress Code & Symbolism</h4>
+                <p>Deep purple/violet cloak with matching headwrap, medal of honor, pearl necklace. The purple color in Pedi culture represents royalty (bokgosi) and spiritual authority. The hands clasped in prayer represent the spiritual anchor of the maternal line.</p>
+            </div>
+        `
+    },
+    ben: {
+        title: '👔 Ben Mahlatsi',
+        subtitle: 'The Father of My Late Father | c. 1920s-1930s',
+        img: 'ben_mahlatsi.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Ben Mahlatsi.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Ben Mahlatsi represents the generation that stood at the crossroads of two worlds. He wore the suit of the modern professional while carrying the crocodile blood of Mollele Mahlatsi within him.</p>
+                <div class="doc-quote">"His sepia portrait is a time capsule — a bridge between the ancient spiritual sovereignty of the Bakoena and the demands of a changing world."</div>
+                <p>He is the father who passed down not just blood, but the silent strength of survival.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Sesotho:</b><br><br>
+                    "Ben Mahlatsi — the quiet warrior, the bridge between worlds.<br>
+                    Koena — the crocodile, royal totem of the Bakoena.<br>
+                    He who carried the blood of Mollele into the modern era,<br>
+                    Wearing the suit of the colonizer while keeping the soul of the ancestor.<br>
+                    His sepia portrait is a time capsule."<br><br>
+                    <i>The sepia tone represents the fading memory of a generation that lived through the most violent transitions of South African history.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>👔 Dress Code & Symbolism</h4>
+                <p>Dark formal suit, white shirt, tie — the uniform of the colonial-era African professional. The suit is both armor and compromise — a necessary adaptation that never erased the crocodile blood within.</p>
+            </div>
+        `
+    },
+    pascalina: {
+        title: '👩 Pascalina',
+        subtitle: 'A Woman Ahead of Her Time | 1926',
+        img: 'pascalina.png',
+        content: `
+            <div class="doc-section">
+                <h4>🎬 The Documentary</h4>
+                <div class="doc-video-placeholder" onclick="alert('Documentary video coming soon. This space is reserved for the sacred visual narrative of Pascalina.')">
+                    <div class="play-icon">▶</div>
+                    <div>Tap to play documentary (coming soon)</div>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>📖 The Narrative</h4>
+                <p>Pascalina was born in 1926 — a woman ahead of her time. She worked hard, lived well, and inspired many. Her legacy lives on through the books she held, the perfume she wore, and the leopard-print headwrap that connected her to the royal lineage of Mollele Mahlatsi.</p>
+                <div class="doc-quote">"She represents the modern African woman who refused to be defined by the limitations of her era."</div>
+                <p>The books beneath her hands — "A Woman Who Leads," "Strategy & Vision," "Hope Is Ours" — are not mere props. They are a manifesto. The perfume bottle represents the fragrance of her memory that still lingers across generations.</p>
+            </div>
+            <div class="doc-section">
+                <h4>🗣️ Clan Praises</h4>
+                <div class="doc-praise">
+                    <b>Sesotho:</b><br><br>
+                    "Pascalina — born 1926, a woman ahead of her time.<br>
+                    She worked hard. She lived well. She inspired many.<br>
+                    Her legacy lives on.<br>
+                    The leopard-print headwrap — a crown of wild beauty.<br>
+                    The books beneath her hands: 'A Woman Who Leads',<br>
+                    'Strategy & Vision', 'Hope Is Ours'."<br><br>
+                    <i>The books are a manifesto. The perfume bottle represents the fragrance of her memory that still lingers across generations.</i>
+                </div>
+            </div>
+            <div class="doc-section">
+                <h4>👗 Dress Code & Symbolism</h4>
+                <p>Cream/ivory formal suit, leopard-print headwrap (tuku ya lehlosi), pearl necklace and earrings, designer handbag, perfume bottle. The cream suit represents purity of intention. The leopard print connects her to the royal lineage of Mollele Mahlatsi. The pearls symbolize wisdom earned through hardship.</p>
+            </div>
+        `
+    }
+};
+
+function openDocumentary(name) {
+    const doc = DOCUMENTARIES[name];
+    if (!doc) return;
+    const modal = document.getElementById('doc-modal');
+    const content = document.getElementById('doc-content');
+
+    let imgHtml = '';
+    if (doc.img) {
+        imgHtml = `<img src="${doc.img}" class="doc-ancestor-img" alt="${doc.title}" onerror="this.style.display='none'">`;
+    }
+
+    content.innerHTML = `
+        ${imgHtml}
+        <div class="doc-title">${doc.title}</div>
+        <div class="doc-subtitle">${doc.subtitle}</div>
+        ${doc.content}
+    `;
+
+    modal.classList.add('active');
+    setTimeout(() => modal.classList.add('visible'), 50);
+}
+
+function closeDocumentary() {
+    const modal = document.getElementById('doc-modal');
+    modal.classList.remove('visible');
+    setTimeout(() => modal.classList.remove('active'), 600);
+}
+
+// Block right-click
+window.addEventListener('contextmenu', e => e.preventDefault());
+// Block keyboard shortcuts
+window.addEventListener('keydown', e => {
+    if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'p')) e.preventDefault();
+    if (e.key === 'F12') e.preventDefault();
+});
+</script>
+</body>
+</html>
